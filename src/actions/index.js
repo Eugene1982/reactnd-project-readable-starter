@@ -1,6 +1,7 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
 
 export const GET_POSTS = 'GET_POSTS'
+export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 
 
@@ -11,6 +12,21 @@ export function getCategories(categories) {
   }
 }
 
+export function getPosts (posts) {
+  return {
+    type: GET_POSTS,
+    posts
+  }
+}
+
+export function getPostsByCategory (category) {
+  return {
+    type: GET_POSTS_BY_CATEGORY,
+    category
+  }
+}
+
+//API async fetchers. redux-thunk helps to conect them as actions
 export function fetchCategories() {
     return dispatch => {
       ReadableAPI.getCategories().then(categories => {
@@ -19,11 +35,11 @@ export function fetchCategories() {
   }
 }
 
-
-export function getPosts ({getState, category}) {
-  return {
-    type: GET_POSTS,
-    getState,
-    category
+export function fetchPosts() {
+    return dispatch => {
+      ReadableAPI.getPosts().then(posts => {
+         dispatch(getPosts(posts))
+      })
   }
 }
+

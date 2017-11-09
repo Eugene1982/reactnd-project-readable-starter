@@ -2,49 +2,51 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import './App.css';
 import Categories from './categories'
-//import Posts from './posts'
-import { fetchCategories } from '../actions'
+import Posts from './posts'
+import { fetchCategories, fetchPosts, getPostsByCategory } from '../actions'
 
 import * as ReadableAPI from '../utils/ReadableAPI'
-
 
 class App extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchCategories())
+    this.props.dispatch(fetchPosts())
+  }
+
+  postsByCategory = (category) => {
+    return this.state.posts.filter(post => post.category === category)
   }
 
   selectCategory = (category) => {
-    /* this.setState(() => ({
-        posts: this.getPostsByCategory(category) 
-       }))*/
-
+    this.props.dispatch(getPostsByCategory(category))
   }
-
 
   render() {
     return (
-      <Categories categories={this.props.categories} onSelect={this.selectCategory} />
+      <div>
+        <Categories categories={this.props.categories} onSelect={this.selectCategory} />
+        <Posts list={this.props.posts} />
+      </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { categories } = state
+  const { categories, posts, postsByCategory } = state
+  if (!Object.keys(postsByCategory).length) {
+    return {
+      categories,
+      posts
+    }
+  }
   return {
-    categories
+    categories,
+    posts: posts.filter(post => post.category == postsByCategory)
   }
 };
 
-/*
-const mapDispatchToProps =  (dispatch) => {
-  return {
-    getPostsByCategory: (data) => dispatch(getPosts({category: data})),
-    loadCategories:  (categories) => dispatch(getCategories(categories))
-  }
-}*/
 
 export default connect(
-  mapStateToProps/*,
-  mapDispatchToProps*/
+  mapStateToProps
 )(App)

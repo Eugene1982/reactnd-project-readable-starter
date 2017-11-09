@@ -26,11 +26,4 @@ class Categories extends Component {
 }
 }
 
-/*function mapStateToProps (state) {
-  return {
-    categories: state
-  }
-}
-*/
-
 export default Categories
