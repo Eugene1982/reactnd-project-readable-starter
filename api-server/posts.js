@@ -3,6 +3,16 @@ const clone = require('clone')
 let db = {}
 
 const defaultData = {
+  "7xf0y6ziyjabvozdd253nd": {
+    id: '1x40y6zi77jabvozdd253nd',
+    timestamp: 1468479767190,
+    title: 'My title ',
+    body: 'Everyone says so after all.',
+    author: 'thingtwo',
+    category: 'react',
+    voteScore: 2,
+    deleted: false
+  },
   "8xf0y6ziyjabvozdd253nd": {
     id: '8xf0y6ziyjabvozdd253nd',
     timestamp: 1467166872634,

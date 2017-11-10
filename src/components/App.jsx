@@ -1,51 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import _ from 'lodash'
 import './App.css';
 import Categories from './categories'
 import Posts from './posts'
-import { fetchCategories, fetchPosts, getPostsByCategory } from '../actions'
-
-import * as ReadableAPI from '../utils/ReadableAPI'
+import {BY_VOTE_SCORE, BY_TIME_STAMP, NONE} from '../utils/constants'
+import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy } from '../actions'
 
 class App extends Component {
 
   componentDidMount() {
-    this.props.dispatch(fetchCategories())
-    this.props.dispatch(fetchPosts())
+    const {dispatch} = this.props
+    dispatch(fetchCategories())
+    dispatch(fetchPosts())
   }
 
   postsByCategory = (category) => {
-    return this.state.posts.filter(post => post.category === category)
+    const {posts} = this.state
+    return posts.filter(post => post.category === category)
+  }
+
+  onSortPostsBy = (sortBy) => {
+    const {dispatch} = this.props
+    dispatch(sortPostsBy(sortBy))
   }
 
   selectCategory = (category) => {
-    this.props.dispatch(getPostsByCategory(category))
+    const {dispatch} = this.props
+    dispatch(getPostsByCategory(category))
+    dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
-
+  
   render() {
     return (
       <div>
-        <Categories categories={this.props.categories} onSelect={this.selectCategory} />
-        <Posts list={this.props.posts} />
+        <Route exact path="/" render={() => (
+          <div>
+            <Categories categories={this.props.categories} onSelect={this.selectCategory} />
+            <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy}/>
+          </div>
+        )} />
       </div>
     )
   }
 }
 
+const applyFilteringAndSorting = (posts, category, sortBy) => {
+  let _posts = posts;
+  if (Object.keys(category).length){
+        _posts = _posts.filter(post => post.category === category) 
+  }
+  if(sortBy !== NONE){
+      _posts = _.orderBy(_posts, sortBy, 'desc')
+  }
+
+  return _posts;
+}
+
 const mapStateToProps = (state) => {
-  const { categories, posts, postsByCategory } = state
-  if (!Object.keys(postsByCategory).length) {
+  const { categories, posts, selectCategory, sortPostsBy } = state
     return {
       categories,
-      posts
+      posts : applyFilteringAndSorting(posts, selectCategory, sortPostsBy)
     }
-  }
-  return {
-    categories,
-    posts: posts.filter(post => post.category == postsByCategory)
-  }
 };
-
 
 export default connect(
   mapStateToProps

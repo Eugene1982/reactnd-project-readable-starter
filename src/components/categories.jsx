@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import Posts from './posts'
-import { connect } from 'react-redux'
+import React from 'react';
 
-class Categories extends Component {
- 
- render(){
-  const { categories, onSelect } = this.props
+export default function Categories({ categories, onSelect }) {
+
   if (categories && categories.length === 0) {
     return <p>Your search has 0 results.</p>
   }
   return (
-   <div className='categories-list'>
+    <div className='categories-list'>
       <h3 className='subheader'>
         Categories
       </h3>
@@ -24,6 +20,3 @@ class Categories extends Component {
     </div>
   )
 }
-}
-
-export default Categories

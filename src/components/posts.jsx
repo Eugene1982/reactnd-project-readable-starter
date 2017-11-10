@@ -1,7 +1,7 @@
 import React from 'react'
+import SortControl from './sortcontrol'
 
-
-export default function Posts ({ list }) {
+export default function Posts ({ list, onSortPostsBy }) {
     if (list.length === 0) {
       return <p>Your search has 0 results.</p>
     }
@@ -11,10 +11,11 @@ export default function Posts ({ list }) {
         <h3 className='subheader'>
           Posts
         </h3>
+        <SortControl onSortBy={onSortPostsBy} />
         <ul>
           {list.map((item) => (
             <li key={item.title} >
-              {item.title}
+              {item.title} Score: {item.voteScore}
             </li>
           ))}
         </ul>
