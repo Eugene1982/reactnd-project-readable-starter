@@ -9,12 +9,13 @@ import Categories from './categories'
 import Posts from './posts'
 import AddEditControl from './addeditcontrol'
 import { BY_VOTE_SCORE, BY_TIME_STAMP, NONE } from '../utils/constants'
-import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy } from '../actions'
+import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy, addPost } from '../actions'
 
 class App extends Component {
 
   state = {
-    addModalOpen : false
+    addModalOpen : false,
+    category: {}
   }
 
   componentDidMount() {
@@ -38,8 +39,25 @@ class App extends Component {
 
   selectCategory = (category) => {
     const { dispatch } = this.props
+    this.setState(() => category)
     dispatch(getPostsByCategory(category))
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
+  }
+
+  createPost = (post) => {
+    const { dispatch} = this.props
+    const {body, title, author} = post
+    
+    dispatch(addPost({
+      id: _.uniqueId(),
+      title: title,
+      body: body,
+      category: this.state.category,
+      author : author,
+      timestamp:  Date.now()
+    }))
+
+    dispatch(getPostsByCategory(this.state.category))
   }
 
   render() {
@@ -70,7 +88,7 @@ class App extends Component {
           onRequestClose={this.closeModal}
           contentLabel='Modal'
         >
-          {addModalOpen && <AddEditControl />}
+          {addModalOpen && <AddEditControl savePost={this.createPost}/>}
         </Modal>
 
 

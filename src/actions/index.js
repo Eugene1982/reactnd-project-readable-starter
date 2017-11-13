@@ -4,6 +4,7 @@ export const GET_POSTS = 'GET_POSTS'
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_POSTS = 'SORT_POSTS'
+export const ADD_POST = 'ADD_POST'
 
 
 export function getCategories(categories) {
@@ -36,18 +37,29 @@ export function sortPostsBy(sortBy) {
 
 //API async fetchers. redux-thunk helps to conect them as actions
 export function fetchCategories() {
-    return dispatch => {
-      ReadableAPI.getCategories().then(categories => {
-         dispatch(getCategories(categories))
-      })
+  return dispatch => {
+    ReadableAPI.getCategories().then(categories => {
+      dispatch(getCategories(categories))
+    })
   }
 }
 
 export function fetchPosts() {
-    return dispatch => {
-      ReadableAPI.getPosts().then(posts => {
-         dispatch(getPosts(posts))
-      })
+  return dispatch => {
+    ReadableAPI.getPosts().then(posts => {
+      dispatch(getPosts(posts))
+    })
+  }
+}
+
+export function addPost(post) {
+  return dispatch => {
+    ReadableAPI.addPost(post).then(p => {
+      return {
+        type: ADD_POST,
+        p
+      }
+    })
   }
 }
 
