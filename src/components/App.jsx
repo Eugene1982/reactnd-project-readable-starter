@@ -68,6 +68,8 @@ class App extends Component {
         <Route exact path="/" render={() => (
           <div>
             <Categories categories={this.props.categories} onSelect={this.selectCategory} />
+            
+            <div>
             <div className='nav'>
               <button
                 className='shopping-list'
@@ -77,6 +79,7 @@ class App extends Component {
             </div>
 
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} />
+            </div>
           </div>
         )} />
 

@@ -6,19 +6,17 @@ export default function Categories({ categories, onSelect }) {
     return <p>Your search has 0 results.</p>
   }
   return (
-    <div className='categories-list'>
-      <h3 className='subheader'>
-        Categories
-      </h3>
-      <ul>
+   
+    <div >
+      <ul className='categories-list'>
+      <li key="all" onClick={() => onSelect({})}>
+           <a href="#">All Categories</a>
+        </li>
         {categories && categories.map((item) => (
           <li key={item.name} onClick={() => onSelect(item.path)}>
-            <div className="cat-item-name">{item.name}</div>
+            <a href="#">{item.name}</a>
           </li>
         ))}
-        <li key="all" onClick={() => onSelect({})}>
-          <div className="cat-item-name">All Categories</div>
-        </li>
       </ul>
     </div>
   )
