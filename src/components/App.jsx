@@ -14,7 +14,7 @@ import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy, addPost }
 class App extends Component {
 
   state = {
-    addModalOpen : false,
+    addModalOpen: false,
     category: {}
   }
 
@@ -26,7 +26,7 @@ class App extends Component {
 
   openModal = () => this.setState(() => ({ addModalOpen: true }))
   closeModal = () => this.setState(() => ({ addModalOpen: false }))
-  
+
   postsByCategory = (category) => {
     const { posts } = this.state
     return posts.filter(post => post.category === category)
@@ -39,37 +39,36 @@ class App extends Component {
 
   selectCategory = (category) => {
     const { dispatch } = this.props
-    this.setState(() => ({category : category}))
+    this.setState(() => ({ category: category }))
     dispatch(getPostsByCategory(category))
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
 
   createPost = (post) => {
-    const { dispatch} = this.props
-    const {body, title, author} = post
-    
+    const { dispatch } = this.props
+    const { body, title, author } = post
+
     dispatch(addPost({
       id: _.uniqueId(),
       title: title,
       body: body,
       category: this.state.category,
-      author : author,
-      timestamp:  Date.now()
+      author: author,
+      timestamp: Date.now()
     }))
 
     this.closeModal()
   }
 
   render() {
-   const {addModalOpen} = this.state
+    const { addModalOpen } = this.state
 
     return (
       <div>
         <Route exact path="/" render={() => (
           <div>
-            <Categories categories={this.props.categories} onSelect={this.selectCategory} activeCategory={this.state.category}/>
-            
-            <div>
+            <Categories categories={this.props.categories} onSelect={this.selectCategory} activeCategory={this.state.category} />
+         { Object.keys(this.state.category).length > 0 &&
             <div className='nav'>
               <button
                 className='shopping-list'
@@ -77,9 +76,8 @@ class App extends Component {
                 Add Post
                </button>
             </div>
-
+           }
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} />
-            </div>
           </div>
         )} />
 
@@ -90,7 +88,7 @@ class App extends Component {
           onRequestClose={this.closeModal}
           contentLabel='Modal'
         >
-          {addModalOpen && <AddEditControl savePost={this.createPost}/>}
+          {addModalOpen && <AddEditControl savePost={this.createPost} />}
         </Modal>
 
 
