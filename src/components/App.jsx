@@ -65,22 +65,27 @@ class App extends Component {
 
     return (
       <div>
+        <Categories categories={this.props.categories} onSelect={this.selectCategory} activeCategory={this.state.category} />
+        {Object.keys(this.state.category).length > 0 &&
+          <div className='nav'>
+            <button
+              className='shopping-list'
+              onClick={this.openModal}>
+              Add Post
+               </button>
+          </div>
+        }
+       <Route path="/post" render={() => (
+          <div>
+            <Link to="/"> See all posts</Link>
+          </div>
+        )} />
         <Route exact path="/" render={() => (
           <div>
-            <Categories categories={this.props.categories} onSelect={this.selectCategory} activeCategory={this.state.category} />
-         { Object.keys(this.state.category).length > 0 &&
-            <div className='nav'>
-              <button
-                className='shopping-list'
-                onClick={this.openModal}>
-                Add Post
-               </button>
-            </div>
-           }
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} />
           </div>
         )} />
-
+       
         <Modal
           className='modal'
           overlayClassName='overlay'
