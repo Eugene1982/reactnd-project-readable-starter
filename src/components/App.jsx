@@ -67,7 +67,7 @@ class App extends Component {
       <div>
         <Route exact path="/" render={() => (
           <div>
-            <Categories categories={this.props.categories} onSelect={this.selectCategory} />
+            <Categories categories={this.props.categories} onSelect={this.selectCategory} activeCategory={this.state.category}/>
             
             <div>
             <div className='nav'>

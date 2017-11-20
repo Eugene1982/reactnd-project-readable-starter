@@ -1,19 +1,16 @@
 import React from 'react';
 
-export default function Categories({ categories, onSelect }) {
-
+export default function Categories({ categories, onSelect, activeCategory }) {
+ 
   if (categories && categories.length === 0) {
     return <p>Your search has 0 results.</p>
   }
+ 
   return (
-   
     <div >
       <ul className='categories-list'>
-      <li key="all" onClick={() => onSelect({})}>
-           <a href="#">All Categories</a>
-        </li>
         {categories && categories.map((item) => (
-          <li key={item.name} onClick={() => onSelect(item.path)}>
+          <li key={item.name} className={Object.keys(activeCategory).length == 0 && item.name == 'All' || activeCategory == item.name ? 'navigation--active': '' } onClick={() => onSelect(item.path)}>
             <a href="#">{item.name}</a>
           </li>
         ))}
