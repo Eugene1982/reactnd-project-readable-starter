@@ -26,3 +26,32 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+
+.categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.categories-list li {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+.categories-list-selected {  
+  color: #39aea8;  
+  position: relative;  
+  z-index: 2;  
+ float: left;  
+ font-size: 15px;  
+ font-weight:bold;
+ font-family: helvetica, arial, sans-serif;  
+ text-decoration: none;  
+ padding: 5px 45px;  
+}  
