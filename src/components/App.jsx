@@ -44,10 +44,6 @@ class App extends Component {
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
 
-  allCategories = () => {
-    this.selectCategory({})
-  }
-
   createPost = (post) => {
     const { dispatch} = this.props
     const {body, title, author} = post
@@ -72,7 +68,6 @@ class App extends Component {
         <Route exact path="/" render={() => (
           <div>
             <Categories categories={this.props.categories} onSelect={this.selectCategory} />
-            <button onClick={this.allCategories}>All Categories</button>
             <div className='nav'>
               <button
                 className='shopping-list'
@@ -80,7 +75,6 @@ class App extends Component {
                 Add Post
                </button>
             </div>
-
 
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} />
           </div>

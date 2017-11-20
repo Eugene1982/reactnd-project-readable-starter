@@ -13,9 +13,12 @@ export default function Categories({ categories, onSelect }) {
       <ul>
         {categories && categories.map((item) => (
           <li key={item.name} onClick={() => onSelect(item.path)}>
-            {item.name}
+            <div className="cat-item-name">{item.name}</div>
           </li>
         ))}
+        <li key="all" onClick={() => onSelect({})}>
+          <div className="cat-item-name">All Categories</div>
+        </li>
       </ul>
     </div>
   )
