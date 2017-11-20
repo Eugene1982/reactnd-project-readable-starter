@@ -39,7 +39,7 @@ class App extends Component {
 
   selectCategory = (category) => {
     const { dispatch } = this.props
-    this.setState(() => category)
+    this.setState(() => ({category : category}))
     dispatch(getPostsByCategory(category))
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
@@ -57,7 +57,9 @@ class App extends Component {
       timestamp:  Date.now()
     }))
 
-    dispatch(getPostsByCategory(this.state.category))
+    //dispatch(getPostsByCategory(this.state.category))
+    
+    this.closeModal()
   }
 
   render() {

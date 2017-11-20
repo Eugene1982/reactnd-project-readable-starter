@@ -55,10 +55,10 @@ export function fetchPosts() {
 export function addPost(post) {
   return dispatch => {
     ReadableAPI.addPost(post).then(p => {
-      return {
+      dispatch({
         type: ADD_POST,
-        p
-      }
+        post: p
+      })
     })
   }
 }

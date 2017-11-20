@@ -28,4 +28,4 @@ export const getPosts = () =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(body)
-  }).then(res => console.log(res))
+  }).then(res => res.json())

@@ -5,7 +5,8 @@ import {
   GET_CATEGORIES,
   GET_POSTS,
   GET_POSTS_BY_CATEGORY,
-  SORT_POSTS
+  SORT_POSTS,
+  ADD_POST
 } from '../actions'
 
 function categories(state = [], action) {
@@ -21,7 +22,9 @@ function posts(state = [], action) {
   switch (action.type) {
     case GET_POSTS:
       return action.posts
-    default:
+    case ADD_POST:
+      return  [...state, action.post]
+     default:
       return state
   }
 }
