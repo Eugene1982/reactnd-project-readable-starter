@@ -5,7 +5,7 @@ export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
 export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_POSTS = 'SORT_POSTS'
 export const ADD_POST = 'ADD_POST'
-
+export const GET_POST = 'GET_POST'
 
 export function getCategories(categories) {
   return {
@@ -63,3 +63,14 @@ export function addPost(post) {
   }
 }
 
+export function fetchPostDetail(postId) {
+  return dispatch => {
+    ReadableAPI.getPost(postId).then(p => {
+      dispatch({
+        type: GET_POST,
+        post: p
+      })
+    })
+  }
+
+}

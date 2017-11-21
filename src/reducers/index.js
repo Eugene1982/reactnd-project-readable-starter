@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux'
-import {BY_VOTE_SCORE} from '../utils/constants';
+import { BY_VOTE_SCORE } from '../utils/constants';
 
 import {
   GET_CATEGORIES,
   GET_POSTS,
   GET_POSTS_BY_CATEGORY,
   SORT_POSTS,
-  ADD_POST
+  ADD_POST,
+  GET_POST
 } from '../actions'
 
 function categories(state = [], action) {
@@ -23,16 +24,25 @@ function posts(state = [], action) {
     case GET_POSTS:
       return action.posts
     case ADD_POST:
-      return  [...state, action.post]
-     default:
+      return [...state, action.post]
+    default:
+      return state
+  }
+}
+
+function post(state = {}, action) {
+  switch (action.type) {
+    case GET_POST:
+      return action.post
+    default:
       return state
   }
 }
 
 function selectCategory(state = {}, action) {
   switch (action.type) {
-     case GET_POSTS_BY_CATEGORY:
-       return action.category
+    case GET_POSTS_BY_CATEGORY:
+      return action.category
     default:
       return state
   }
@@ -40,8 +50,8 @@ function selectCategory(state = {}, action) {
 
 function sortPostsBy(state = BY_VOTE_SCORE, action) {
   switch (action.type) {
-     case SORT_POSTS:
-       return action.sortBy
+    case SORT_POSTS:
+      return action.sortBy
     default:
       return state
   }
@@ -50,6 +60,7 @@ function sortPostsBy(state = BY_VOTE_SCORE, action) {
 const rootReducer = combineReducers({
   categories,
   posts,
+  post,
   selectCategory,
   sortPostsBy
 })

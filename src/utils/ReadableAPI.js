@@ -32,4 +32,4 @@ export const getPosts = () =>
 
   export const getPost = (id) =>
   fetch(`${api}/post/${id}`, { headers })
-  .then(res => res.json())
+  .then(res => res)
