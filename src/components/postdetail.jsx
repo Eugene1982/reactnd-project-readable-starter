@@ -9,15 +9,14 @@ class PostDetail extends Component {
     }
 
     render() {
-    
+       const { post } = this.props
         return (
             <div>
                 <h3 className='subheader'>
-                    <div>Post Detail {this.props.postId}</div>
-                    <div>Title: {this.props.title}</div>
-                    <div> Body: {this.props.body}</div>
-                    <div>Author: {this.props.author}</div>
-                    <div>Vote: {this.props.voteScore}</div>
+                    <div>Post Detail {post.id}</div>
+                    <div>Title: {post.title}</div>
+                    <div> Body: {post.body}</div>
+                    <div>Vote: {post.voteScore}</div>
         </h3>
             </div>
         )
