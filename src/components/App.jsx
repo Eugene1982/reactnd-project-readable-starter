@@ -6,6 +6,7 @@ import _ from 'lodash'
 import './App.css';
 import Categories from './categories'
 import Posts from './posts'
+import PostDetail from './postdetail'
 import AddEditControl from './addeditcontrol'
 import { BY_VOTE_SCORE, BY_TIME_STAMP, NONE } from '../utils/constants'
 import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy, addPost } from '../actions'
@@ -74,9 +75,10 @@ class App extends Component {
                </button>
           </div>
         }
-       <Route path="/post" render={() => (
+       <Route path="/post/:postId" render={(props) => (
           <div>
             <Link to="/">See all posts</Link>
+            <PostDetail postId={props.match.params.postId}/>
           </div>
         )} />
         <Route exact path="/" render={() => (

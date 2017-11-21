@@ -10,7 +10,7 @@ export default function Categories({ categories, onSelect, activeCategory }) {
     <div >
       <ul className='categories-list'>
         {categories && categories.map((item) => (
-          <li key={item.name} className={Object.keys(activeCategory).length == 0 && item.name == 'All' || activeCategory == item.name ? 'navigation--active': '' } onClick={() => onSelect(item.path)}>
+          <li key={item.name} className={Object.keys(activeCategory).length === 0 && item.name === 'All' || activeCategory === item.name ? 'navigation--active': '' } onClick={() => onSelect(item.path)}>
             <a href="#">{item.name}</a>
           </li>
         ))}

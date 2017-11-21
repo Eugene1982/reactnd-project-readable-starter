@@ -29,3 +29,7 @@ export const getPosts = () =>
     },
     body: JSON.stringify(body)
   }).then(res => res.json())
+
+  export const getPost = (id) =>
+  fetch(`${api}/post/${id}`, { headers })
+  .then(res => res.json())
