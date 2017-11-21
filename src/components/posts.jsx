@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import SortControl from './sortcontrol'
 
 export default function Posts ({ list, onSortPostsBy }) {
@@ -15,7 +16,7 @@ export default function Posts ({ list, onSortPostsBy }) {
         <ul>
           {list.map((item) => (
             <li key={item.title} >
-              {item.title} Score: {item.voteScore}
+              <Link to={`/post/${item.id}`}> {item.title}</Link> Score: {item.voteScore}
             </li>
           ))}
         </ul>

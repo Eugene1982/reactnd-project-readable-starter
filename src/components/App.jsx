@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Route, withRouter, Link } from 'react-router-dom';
 import Modal from 'react-modal'
 import _ from 'lodash'
 import './App.css';
@@ -77,7 +76,7 @@ class App extends Component {
         }
        <Route path="/post" render={() => (
           <div>
-            <Link to="/"> See all posts</Link>
+            <Link to="/">See all posts</Link>
           </div>
         )} />
         <Route exact path="/" render={() => (
@@ -122,6 +121,6 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps
-)(App)
+)(App))
