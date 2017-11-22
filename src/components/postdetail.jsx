@@ -4,6 +4,7 @@ import { fetchPostDetail } from '../actions'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import { updatePost, deletePost } from '../actions'
+import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
 
@@ -39,12 +40,15 @@ class PostDetail extends Component {
         const { dispatch, post, history } = this.props
         e.preventDefault()
         dispatch(deletePost(post.id))
-        history.push('/')
     }
 
     render() {
         const { post } = this.props
         const { editModalOpen } = this.state
+
+        if (post.isDeleted) {
+            return <Redirect to={'/'} />;
+          }
 
         let dateTime = new Date(post.timestamp * 1000).toUTCString()
         return (

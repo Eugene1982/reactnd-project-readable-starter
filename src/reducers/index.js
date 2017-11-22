@@ -35,7 +35,7 @@ function posts(state = [], action) {
         return {...item, ...action.post}
       })
      case DELETE_POST:
-       return state
+       return state.filter((item) => item.id !== action.postId)
     default:
       return state
   }
@@ -47,6 +47,8 @@ function post(state = {}, action) {
       return action.post
     case UPDATE_POST:
       return action.post
+    case DELETE_POST:
+       return {isDeleted : true}
     default:
       return state
   }
