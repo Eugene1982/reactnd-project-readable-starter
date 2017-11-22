@@ -7,7 +7,9 @@ import {
   GET_POSTS_BY_CATEGORY,
   SORT_POSTS,
   ADD_POST,
-  GET_POST
+  GET_POST,
+  UPDATE_POST,
+  DELETE_POST
 } from '../actions'
 
 function categories(state = [], action) {
@@ -25,6 +27,15 @@ function posts(state = [], action) {
       return action.posts
     case ADD_POST:
       return [...state, action.post]
+    case UPDATE_POST://move to separate function
+      return state.map((item, index) => {
+        if(item.id !== action.post.id){
+          return item
+        }
+        return {...item, ...action.post}
+      })
+     case DELETE_POST:
+       return state
     default:
       return state
   }
@@ -33,6 +44,8 @@ function posts(state = [], action) {
 function post(state = {}, action) {
   switch (action.type) {
     case GET_POST:
+      return action.post
+    case UPDATE_POST:
       return action.post
     default:
       return state

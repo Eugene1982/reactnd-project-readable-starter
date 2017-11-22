@@ -3,7 +3,7 @@ const clone = require('clone')
 let db = {}
 
 const defaultData = {
-  "7xf0y6ziyjabvozdd253nd": {
+  "1x40y6zi77jabvozdd253nd": {
     id: '1x40y6zi77jabvozdd253nd',
     timestamp: 1468479767190,
     title: 'My title ',

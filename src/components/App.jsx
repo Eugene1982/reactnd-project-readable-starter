@@ -77,7 +77,7 @@ class App extends Component {
         }
        <Route path="/post/:postId" render={(props) => (
           <div>
-            <Link to="/">See all posts</Link>
+            <Link to="/">Return to posts</Link>
             <PostDetail postId={props.match.params.postId}/>
           </div>
         )} />
@@ -94,7 +94,7 @@ class App extends Component {
           onRequestClose={this.closeModal}
           contentLabel='Modal'
         >
-          {addModalOpen && <AddEditControl savePost={this.createPost} />}
+          {addModalOpen && <AddEditControl savePost={this.createPost}/>}
         </Modal>
 
 

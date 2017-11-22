@@ -6,6 +6,8 @@ export const GET_CATEGORIES = 'GET_CATEGORIES'
 export const SORT_POSTS = 'SORT_POSTS'
 export const ADD_POST = 'ADD_POST'
 export const GET_POST = 'GET_POST'
+export const UPDATE_POST = 'UPDATE_POST'
+export const DELETE_POST = 'DELETE_POST'
 
 export function getCategories(categories) {
   return {
@@ -63,6 +65,17 @@ export function addPost(post) {
   }
 }
 
+export function updatePost(post) {
+  return dispatch => {
+    ReadableAPI.updatePost(post.id, post).then(p => {
+      dispatch({
+        type: UPDATE_POST,
+        post: p
+      })
+    })
+  }
+}
+
 export function fetchPostDetail(postId) {
   return dispatch => {
     ReadableAPI.getPost(postId).then(p => {
@@ -72,5 +85,15 @@ export function fetchPostDetail(postId) {
       })
     })
   }
+}
 
+export function deletePost(postId) {
+  return dispatch => {
+    ReadableAPI.deletePost(postId).then(p => {
+      dispatch({
+        type: DELETE_POST,
+        postId: p.id
+      })
+    })
+  }
 }
