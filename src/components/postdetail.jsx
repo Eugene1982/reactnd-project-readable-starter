@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchPostDetail } from '../actions'
+import { fetchPostDetail, fetchComments } from '../actions'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
+import Comments from './comments'
 import { updatePost, deletePost } from '../actions'
 import { Redirect } from 'react-router-dom';
 
@@ -13,8 +14,9 @@ class PostDetail extends Component {
     }
 
     componentDidMount() {
-        const { dispatch } = this.props
-        dispatch(fetchPostDetail(this.props.postId))
+        const { dispatch, postId } = this.props
+        dispatch(fetchPostDetail(postId))
+        dispatch(fetchComments(postId))
     }
 
     openModal = () => this.setState(() => ({ editModalOpen: true }))
@@ -37,17 +39,17 @@ class PostDetail extends Component {
     }
 
     deletePost = (e) => {
-        const { dispatch, post, history } = this.props
+        const { dispatch, post } = this.props
         e.preventDefault()
         dispatch(deletePost(post.id))
     }
 
     render() {
-        const { post } = this.props
+        const { post, comments } = this.props
         const { editModalOpen } = this.state
 
         if (post.isDeleted) {
-            return <Redirect to={'/'} />;
+            return <Redirect to={'/'} />
           }
 
         let dateTime = new Date(post.timestamp * 1000).toUTCString()
@@ -63,6 +65,9 @@ class PostDetail extends Component {
                     <div> Body: {post.body}</div>
                     <div>Vote: {post.voteScore}</div>
                 </h3>
+                <br/>
+               <Comments list={comments}/>
+
 
                 <Modal
                     className='modal'
@@ -79,9 +84,10 @@ class PostDetail extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { post } = state
+    const { post, comments } = state
     return {
-        post: post
+        post: post,
+        comments: comments
     }
 };
 

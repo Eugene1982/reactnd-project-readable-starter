@@ -8,6 +8,7 @@ export const ADD_POST = 'ADD_POST'
 export const GET_POST = 'GET_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const GET_COMMENTS = 'GET_COMMENTS'
 
 export function getCategories(categories) {
   return {
@@ -93,6 +94,17 @@ export function deletePost(postId) {
       dispatch({
         type: DELETE_POST,
         postId: p.id
+      })
+    })
+  }
+}
+
+export function fetchComments(postId) {
+  return dispatch => {
+    ReadableAPI.getComments(postId).then(comments => {
+      dispatch({
+        type: GET_COMMENTS,
+        comments: comments
       })
     })
   }

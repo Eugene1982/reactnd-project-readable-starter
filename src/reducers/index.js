@@ -9,7 +9,8 @@ import {
   ADD_POST,
   GET_POST,
   UPDATE_POST,
-  DELETE_POST
+  DELETE_POST,
+  GET_COMMENTS
 } from '../actions'
 
 function categories(state = [], action) {
@@ -72,12 +73,22 @@ function sortPostsBy(state = BY_VOTE_SCORE, action) {
   }
 }
 
+function comments(state = [], action) {
+  switch (action.type) {
+    case GET_COMMENTS:
+      return action.comments
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   categories,
   posts,
   post,
   selectCategory,
-  sortPostsBy
+  sortPostsBy,
+  comments
 })
 
 export default rootReducer
