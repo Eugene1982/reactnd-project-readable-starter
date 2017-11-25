@@ -44,7 +44,7 @@ export const updatePost = (id, body) =>
     body: JSON.stringify(body)
   }).then(res => res.json())
 
-  export const deletePost = (id) =>
+export const deletePost = (id) =>
   fetch(`${api}/posts/${id}`, {
     method: 'DELETE',
     headers: {
@@ -53,15 +53,35 @@ export const updatePost = (id, body) =>
     }
   }).then(res => res.json())
 
-  export const getComments = (id) =>
+export const getComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
     .then(res => res.json())
 
-  export const deleteComment = (id) =>
-    fetch(`${api}/comments/${id}`, {
-      method: 'DELETE',
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json'
-      }
-    }).then(res => res.json())
+export const deleteComment = (id) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    }
+  }).then(res => res.json())
+
+export const addComment = (body) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }).then(res => res.json())
+
+export const editComment = (id, body) =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }).then(res => res.json())

@@ -10,6 +10,7 @@ export const GET_POST = 'GET_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const GET_COMMENTS = 'GET_COMMENTS'
+export const ADD_COMMENT = 'ADD_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 
@@ -114,7 +115,7 @@ export function fetchComments(postId) {
 }
 
 
-export function deleteComent(commentId) {
+export function deleteComment(commentId) {
   return dispatch => {
     ReadableAPI.deleteComment(commentId).then(c => {
       dispatch({
@@ -125,16 +126,22 @@ export function deleteComent(commentId) {
   }
 }
 
-
-export function saveComent(commentId) {
+/*comment*/ 
+export function saveComment(commentId) {
   return dispatch => {
-    
-    ReadableAPI.deleteComment(commentId).then(c => {
+    commentId !== null ? 
+    ReadableAPI.editComment(commentId).then(c => {
       dispatch({
-        type: DELETE_COMMENT,
-        commentId: c.id
+        type: EDIT_COMMENT,
+        comment: c
       })
-   
+    })
+      : ReadableAPI.addComment().then(c => {
+        dispatch({
+          type: ADD_COMMENT,
+          comment: c
+        })
+     
     })
   }
 }

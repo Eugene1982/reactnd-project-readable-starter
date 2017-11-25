@@ -25,10 +25,10 @@ class Comments extends Component {
                 <ul>
                     {list.map((item) => (
                         (editCommentId === item.id ? <li key={item.id} >
-                            <input type="text" name="body" defaultValue={item.body} /><button onClick={() => {this.props.onSaveComment(item.id)}}>Save</button>
+                            <input type="text" name="body" defaultValue={item.body} /><button onClick={() => { this.props.onSaveComment(item.id);  this.setState({ editCommentId: null })}}>Save</button>
                         </li>
                             : <li key={item.id}>
-                                {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}>Edit</button> 
+                                {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}>Edit</button>
                                 <button onClick={() => this.props.onDeleteComment(item.id)}>Delete</button>
                             </li>)
 

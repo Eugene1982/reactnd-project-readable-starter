@@ -4,7 +4,7 @@ import { fetchPostDetail, fetchComments } from '../actions'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
-import { updatePost, deletePost } from '../actions'
+import { updatePost, deletePost, saveComment, deleteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
@@ -45,11 +45,13 @@ class PostDetail extends Component {
     }
 
     onDeleteComment = (commentId) => {
-
+        const { dispatch } = this.props
+        dispatch(deleteComment(commentId))
     }
 
     onSaveComment = (commentId) => {
-
+        const { dispatch } = this.props
+        dispatch(saveComment(commentId))
     }
 
     render() {
@@ -74,7 +76,7 @@ class PostDetail extends Component {
                     <div>Vote: {post.voteScore}</div>
                 </h3>
                 <br/>
-               <Comments list={comments} onDeleteComment={this.onDeleteComment}/>
+               <Comments list={comments} onDeleteComment={this.onDeleteComment} onSaveComment={this.onSaveComment}/>
 
 
                 <Modal
