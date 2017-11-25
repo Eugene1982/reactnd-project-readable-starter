@@ -44,6 +44,14 @@ class PostDetail extends Component {
         dispatch(deletePost(post.id))
     }
 
+    onDeleteComment = (commentId) => {
+
+    }
+
+    onSaveComment = (commentId) => {
+
+    }
+
     render() {
         const { post, comments } = this.props
         const { editModalOpen } = this.state
@@ -66,7 +74,7 @@ class PostDetail extends Component {
                     <div>Vote: {post.voteScore}</div>
                 </h3>
                 <br/>
-               <Comments list={comments}/>
+               <Comments list={comments} onDeleteComment={this.onDeleteComment}/>
 
 
                 <Modal

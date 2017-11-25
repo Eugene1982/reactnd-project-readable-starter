@@ -10,7 +10,8 @@ import {
   GET_POST,
   UPDATE_POST,
   DELETE_POST,
-  GET_COMMENTS
+  GET_COMMENTS,
+  DELETE_COMMENT
 } from '../actions'
 
 function categories(state = [], action) {
@@ -77,6 +78,8 @@ function comments(state = [], action) {
   switch (action.type) {
     case GET_COMMENTS:
       return action.comments
+    case DELETE_COMMENT:
+      return state.filter((item) => item.id !== action.commentId)  
     default:
       return state
   }
