@@ -1,35 +1,50 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
 
 class Comments extends Component {
 
     state = {
-        editCommentId: null
+        editCommentId: null,
+        addNew: false
     }
 
     onEditComment = (commentId) => {
-        this.setState({ editCommentId: commentId })
+        this.setState({ editCommentId: commentId, addNew: false })
     }
 
     onSaveComment = (item) => {
-        item.body =  this.refs.input.value
+        item.body = this.refs.input.value
         this.props.onUpdateComment(item);
-        this.setState({ editCommentId: null })
+        this.setState({ editCommentId: null, addNew: false })
+    }
+
+    onSaveNewComment = () => {
+        this.props.onAddComment({
+            id: _.uniqueId(),
+            parentId: this.props.postId,
+            timestamp: Date.now(),
+            body: this.refs.inputNewBody.value,
+            author: this.refs.inputNewAuthor.value,
+            voteScore: -1,
+        });
+        this.setState({ editCommentId: null, addNew: false })
+    }
+
+    addNewComment = () => {
+        this.setState({ addNew: true })
     }
 
     render() {
         const { list } = this.props
-        const { editCommentId } = this.state
+        const { editCommentId, addNew } = this.state
 
-        if (list.length === 0) {
-            return <p>Your search has 0 results.</p>
-        }
         return (
             <div className='posts-list'>
                 <h3 className='subheader'>
                     Comments
-        </h3>
+            </h3>
                 <ul>
-                    {list.map((item) => (
+                    {list.length > 0 && list.map((item) => (
                         (editCommentId === item.id ? <li key={item.id} >
                             <input type="text" name="body" ref="input" defaultValue={item.body} /><button onClick={() => this.onSaveComment(item)}>Save</button>
                         </li>
@@ -40,8 +55,16 @@ class Comments extends Component {
 
                     ))}
                 </ul>
+                <button onClick={() => this.addNewComment()}>Add New</button>
+                {addNew && <div>
+                    <input type="text" name="body" ref="inputNewBody" />
+                    <input type="text" name="author" ref="inputNewAuthor" />
+                    <button onClick={() => this.onSaveNewComment()}>Save</button>
+                </div>}
             </div>
         )
+
+
     }
 }
 

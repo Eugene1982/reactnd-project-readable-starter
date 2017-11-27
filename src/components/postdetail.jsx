@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
-import { fetchPostDetail, fetchComments, updatePost, deletePost, updateComment, deleteComment } from '../actions'
+import { fetchPostDetail, fetchComments, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
@@ -53,6 +53,12 @@ class PostDetail extends Component {
         dispatch(updateComment(comment))
     }
 
+    onAddComment = (comment) => {
+        const { dispatch } = this.props
+        dispatch(addComment(comment))
+        
+    }
+
     render() {
         const { post, comments } = this.props
         const { editModalOpen } = this.state
@@ -75,8 +81,7 @@ class PostDetail extends Component {
                     <div>Vote: {post.voteScore}</div>
                 </h3>
                 <br/>
-               <Comments list={comments} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment}/>
-
+               <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment}/>
 
                 <Modal
                     className='modal'
