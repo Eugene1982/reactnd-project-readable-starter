@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import SortControl from './sortcontrol'
 
-export default function Posts ({ list, onSortPostsBy }) {
+export default function Posts ({ list, onSortPostsBy, onVote }) {
     if (list.length === 0) {
       return <p>Your search has 0 results.</p>
     }

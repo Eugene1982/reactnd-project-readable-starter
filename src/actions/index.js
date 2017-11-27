@@ -81,6 +81,17 @@ export function updatePost(post) {
   }
 }
 
+export function votePost(id, vote) {
+  return dispatch => {
+    ReadableAPI.votePost(id, vote).then(p => {
+      dispatch({
+        type: vote,
+        post: p
+      })
+    })
+  }
+}
+
 export function fetchPostDetail(postId) {
   return dispatch => {
     ReadableAPI.getPost(postId).then(p => {
@@ -113,7 +124,6 @@ export function fetchComments(postId) {
     })
   }
 }
-
 
 export function deleteComment(commentId) {
   return dispatch => {

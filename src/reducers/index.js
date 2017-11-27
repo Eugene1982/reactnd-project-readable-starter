@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { BY_VOTE_SCORE } from '../utils/constants';
+import { BY_VOTE_SCORE, VOTE_UP, VOTE_DOWN } from '../utils/constants';
 
 import {
   GET_CATEGORIES,
@@ -29,17 +29,33 @@ function posts(state = [], action) {
   switch (action.type) {
     case GET_POSTS:
       return action.posts
+    case VOTE_UP:
+      return state.map((item, index) => {
+        if (item.id !== action.post.id) {
+          return item
+        }
+        item.voteScore = action.post.voteScore
+        return item
+      })
+    case VOTE_DOWN:
+      return state.map((item, index) => {
+        if (item.id !== action.post.id) {
+          return item
+        }
+        item.voteScore = action.post.voteScore
+        return item
+      })
     case ADD_POST:
       return [...state, action.post]
     case UPDATE_POST://move to separate function
       return state.map((item, index) => {
-        if(item.id !== action.post.id){
+        if (item.id !== action.post.id) {
           return item
         }
-        return {...item, ...action.post}
+        return { ...item, ...action.post }
       })
-     case DELETE_POST:
-       return state.filter((item) => item.id !== action.postId)
+    case DELETE_POST:
+      return state.filter((item) => item.id !== action.postId)
     default:
       return state
   }
@@ -52,7 +68,11 @@ function post(state = {}, action) {
     case UPDATE_POST:
       return action.post
     case DELETE_POST:
-       return {isDeleted : true}
+      return { isDeleted: true }
+    case VOTE_UP:
+      return action.post
+    case VOTE_DOWN:
+      return action.post
     default:
       return state
   }
@@ -81,17 +101,17 @@ function comments(state = [], action) {
     case GET_COMMENTS:
       return action.comments
     case DELETE_COMMENT:
-      return state.filter((item) => item.id !== action.commentId)  
+      return state.filter((item) => item.id !== action.commentId)
     case ADD_COMMENT:
-      return  [...state, action.comment]
+      return [...state, action.comment]
     case EDIT_COMMENT:
       return state.map((item, index) => {
-        if(item.id !== action.comment.id){
+        if (item.id !== action.comment.id) {
           return item
         }
-        return {...item, ...action.comment}
-      }) 
-      default:
+        return { ...item, ...action.comment }
+      })
+    default:
       return state
   }
 }

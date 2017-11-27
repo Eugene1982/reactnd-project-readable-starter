@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
-import { fetchPostDetail, fetchComments, updatePost, deletePost, addComment, updateComment, deleteComment } from '../actions'
+import VoteControl from './votecontrol'
+import { fetchPostDetail, fetchComments, updatePost, deletePost, votePost, addComment, updateComment, deleteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
-
     state = {
         editModalOpen: false
     }
@@ -32,7 +32,7 @@ class PostDetail extends Component {
             category: post.category,
             author: author,
             timestamp: Date.now()
-          }))
+        }))
 
         this.closeModal()
     }
@@ -56,7 +56,11 @@ class PostDetail extends Component {
     onAddComment = (comment) => {
         const { dispatch } = this.props
         dispatch(addComment(comment))
-        
+    }
+
+    onPostVote = (id, vote) => {
+        const { dispatch } = this.props
+        dispatch(votePost(id, vote))
     }
 
     render() {
@@ -65,7 +69,7 @@ class PostDetail extends Component {
 
         if (post.isDeleted) {
             return <Redirect to={'/'} />
-          }
+        }
 
         let dateTime = new Date(post.timestamp * 1000).toUTCString()
         return (
@@ -80,8 +84,9 @@ class PostDetail extends Component {
                     <div> Body: {post.body}</div>
                     <div>Vote: {post.voteScore}</div>
                 </h3>
-                <br/>
-               <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment}/>
+                <VoteControl currentId={post.id} onVote={this.onPostVote} />
+                <br />
+                <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment} />
 
                 <Modal
                     className='modal'
