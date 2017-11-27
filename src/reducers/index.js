@@ -85,7 +85,12 @@ function comments(state = [], action) {
     case ADD_COMMENT:
       return  [...state, action.comment]
     case EDIT_COMMENT:
-      return state ///! 
+      return state.map((item, index) => {
+        if(item.id !== action.comment.id){
+          return item
+        }
+        return {...item, ...action.comment}
+      }) 
       default:
       return state
   }

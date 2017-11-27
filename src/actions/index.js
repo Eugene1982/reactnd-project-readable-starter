@@ -126,22 +126,24 @@ export function deleteComment(commentId) {
   }
 }
 
-/*comment*/ 
-export function saveComment(commentId) {
+export function updateComment(comment) {
   return dispatch => {
-    commentId !== null ? 
-    ReadableAPI.editComment(commentId).then(c => {
+     ReadableAPI.editComment(comment.id, comment).then(c => {
       dispatch({
         type: EDIT_COMMENT,
         comment: c
       })
     })
-      : ReadableAPI.addComment().then(c => {
-        dispatch({
-          type: ADD_COMMENT,
-          comment: c
-        })
-     
+  }
+}
+
+export function addComment(comment){
+  return dispatch =>{
+     ReadableAPI.addComment(comment).then(c => {
+      dispatch({
+        type: ADD_COMMENT,
+        comment: c
+      })
     })
   }
 }

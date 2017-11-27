@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { fetchPostDetail, fetchComments } from '../actions'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
-import { updatePost, deletePost, saveComment, deleteComment } from '../actions'
+import { fetchPostDetail, fetchComments, updatePost, deletePost, updateComment, deleteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
@@ -49,9 +48,9 @@ class PostDetail extends Component {
         dispatch(deleteComment(commentId))
     }
 
-    onSaveComment = (commentId) => {
+    onUpdateComment = (comment) => {
         const { dispatch } = this.props
-        dispatch(saveComment(commentId))
+        dispatch(updateComment(comment))
     }
 
     render() {
@@ -76,7 +75,7 @@ class PostDetail extends Component {
                     <div>Vote: {post.voteScore}</div>
                 </h3>
                 <br/>
-               <Comments list={comments} onDeleteComment={this.onDeleteComment} onSaveComment={this.onSaveComment}/>
+               <Comments list={comments} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment}/>
 
 
                 <Modal

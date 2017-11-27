@@ -10,6 +10,12 @@ class Comments extends Component {
         this.setState({ editCommentId: commentId })
     }
 
+    onSaveComment = (item) => {
+        item.body =  this.refs.input.value
+        this.props.onUpdateComment(item);
+        this.setState({ editCommentId: null })
+    }
+
     render() {
         const { list } = this.props
         const { editCommentId } = this.state
@@ -25,7 +31,7 @@ class Comments extends Component {
                 <ul>
                     {list.map((item) => (
                         (editCommentId === item.id ? <li key={item.id} >
-                            <input type="text" name="body" defaultValue={item.body} /><button onClick={() => { this.props.onSaveComment(item.id);  this.setState({ editCommentId: null })}}>Save</button>
+                            <input type="text" name="body" ref="input" defaultValue={item.body} /><button onClick={() => this.onSaveComment(item)}>Save</button>
                         </li>
                             : <li key={item.id}>
                                 {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}>Edit</button>
