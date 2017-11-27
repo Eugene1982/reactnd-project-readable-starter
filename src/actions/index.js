@@ -1,5 +1,5 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
-import _ from 'lodash'
+import { VOTE_UP } from '../utils/constants';
 
 export const GET_POSTS = 'GET_POSTS'
 export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
@@ -9,10 +9,14 @@ export const ADD_POST = 'ADD_POST'
 export const GET_POST = 'GET_POST'
 export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
+export const VOTE_POST_UP = 'VOTE_POST_UP'
+export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const VOTE_COMMENT_UP = 'VOTE_COMMENT_UP'
+export const VOTE_COMMENT_DOWN = 'VOTE_COMMENT_DOWN'
 
 export function getCategories(categories) {
   return {
@@ -85,7 +89,7 @@ export function votePost(id, vote) {
   return dispatch => {
     ReadableAPI.votePost(id, vote).then(p => {
       dispatch({
-        type: vote,
+        type: vote === VOTE_UP ? VOTE_POST_UP : VOTE_POST_DOWN,
         post: p
       })
     })
@@ -119,7 +123,7 @@ export function fetchComments(postId) {
     ReadableAPI.getComments(postId).then(comments => {
       dispatch({
         type: GET_COMMENTS,
-        comments: _.orderBy(comments, 'voteScore', 'desc')
+        comments: comments
       })
     })
   }
@@ -138,7 +142,7 @@ export function deleteComment(commentId) {
 
 export function updateComment(comment) {
   return dispatch => {
-     ReadableAPI.editComment(comment.id, comment).then(c => {
+    ReadableAPI.editComment(comment.id, comment).then(c => {
       dispatch({
         type: EDIT_COMMENT,
         comment: c
@@ -147,11 +151,22 @@ export function updateComment(comment) {
   }
 }
 
-export function addComment(comment){
-  return dispatch =>{
-     ReadableAPI.addComment(comment).then(c => {
+export function addComment(comment) {
+  return dispatch => {
+    ReadableAPI.addComment(comment).then(c => {
       dispatch({
         type: ADD_COMMENT,
+        comment: c
+      })
+    })
+  }
+}
+
+export function voteComment(id, vote) {
+  return dispatch => {
+    ReadableAPI.voteComment(id, vote).then(c => {
+      dispatch({
+        type: vote === VOTE_UP ? VOTE_COMMENT_UP : VOTE_COMMENT_DOWN,
         comment: c
       })
     })

@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
 import VoteControl from './votecontrol'
-import { fetchPostDetail, fetchComments, updatePost, deletePost, votePost, addComment, updateComment, deleteComment } from '../actions'
+import { fetchPostDetail, fetchComments, updatePost, deletePost, votePost, addComment, updateComment, deleteComment, voteComment, sortComments } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
@@ -63,6 +63,11 @@ class PostDetail extends Component {
         dispatch(votePost(id, vote))
     }
 
+    onCommentVote = (id, vote) => {
+        const { dispatch, comments } = this.props
+        dispatch(voteComment(id, vote))
+    }
+
     render() {
         const { post, comments } = this.props
         const { editModalOpen } = this.state
@@ -86,7 +91,8 @@ class PostDetail extends Component {
                 </h3>
                 <VoteControl currentId={post.id} onVote={this.onPostVote} />
                 <br />
-                <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment} onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment} />
+                <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment}
+                    onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment} onCommentVote={this.onCommentVote} />
 
                 <Modal
                     className='modal'

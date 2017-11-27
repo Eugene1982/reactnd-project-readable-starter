@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
+import VoteControl from './votecontrol'
 
 class Comments extends Component {
-
     state = {
         editCommentId: null,
         addNew: false
@@ -51,6 +51,7 @@ class Comments extends Component {
                             : <li key={item.id}>
                                 {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}>Edit</button>
                                 <button onClick={() => this.props.onDeleteComment(item.id)}>Delete</button>
+                                <VoteControl currentId={item.id} onVote={this.props.onCommentVote} />
                             </li>)
 
                     ))}
