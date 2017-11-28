@@ -22,7 +22,7 @@ class AddEditControl extends Component {
                             <h3>Edit post</h3>
                             <input type="hidden" name="id" defaultValue={post.id}/><br />
                             <input type="text" name="title" placeholder="Title" defaultValue={post.title} /><br />
-                            <input type="textarea" name="body" placeholder="Body" defaultValue={post.body} /><br />
+                            <input type="textarea" name="body" class="bodyArea" placeholder="Body" defaultValue={post.body} /><br />
                             <input type="text" name="author" placeholder="Author" defaultValue={post.author} /><br />
                         </div>
                     }
@@ -30,7 +30,7 @@ class AddEditControl extends Component {
                         <div>
                             <h3>Add post</h3>
                             <input type="text" name="title" placeholder="Title" /><br />
-                            <input type="textarea" name="body" placeholder="Body" /><br />
+                            <input type="textarea" name="body" class="bodyArea" placeholder="Body" /><br />
                             <input type="text" name="author" placeholder="Author" /><br />
                         </div>
                     }

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import _ from 'lodash'
 import VoteControl from './votecontrol'
+import EditIcon from 'react-icons/lib/fa/edit'
+import SaveIcon from 'react-icons/lib/fa/floppy-o'
+import DeleteIcon from 'react-icons/lib/fa/trash'
+import AddNewIcon from 'react-icons/lib/md/add'
 
 class Comments extends Component {
     state = {
@@ -46,21 +50,21 @@ class Comments extends Component {
                 <ul>
                     {list.length > 0 && list.map((item) => (
                         (editCommentId === item.id ? <li key={item.id} >
-                            <input type="text" name="body" ref="input" defaultValue={item.body} /><button onClick={() => this.onSaveComment(item)}>Save</button>
+                            <input type="text" name="body" ref="input" defaultValue={item.body} /><button onClick={() => this.onSaveComment(item)}><SaveIcon size={10}/></button>
                         </li>
                             : <li key={item.id}>
-                                {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}>Edit</button>
-                                <button onClick={() => this.props.onDeleteComment(item.id)}>Delete</button>
+                                {item.body} Score: {item.voteScore} <button onClick={() => this.onEditComment(item.id)}><EditIcon size={10}/></button>
+                                <button onClick={() => this.props.onDeleteComment(item.id)}><DeleteIcon size={10}/></button>
                                 <VoteControl currentId={item.id} onVote={this.props.onCommentVote} />
                             </li>)
 
                     ))}
                 </ul>
-                <button onClick={() => this.addNewComment()}>Add New</button>
+                <button onClick={() => this.addNewComment()}><AddNewIcon size={20}/></button>
                 {addNew && <div>
                     <input type="text" name="body" ref="inputNewBody" />
                     <input type="text" name="author" ref="inputNewAuthor" />
-                    <button onClick={() => this.onSaveNewComment()}>Save</button>
+                    <button onClick={() => this.onSaveNewComment()}><SaveIcon size={10}/></button>
                 </div>}
             </div>
         )
