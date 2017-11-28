@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import { BY_VOTE_SCORE, VOTE_UP, VOTE_DOWN } from '../utils/constants';
 import _ from 'lodash'
 
 import {
+  BY_VOTE_SCORE,
   GET_CATEGORIES,
   GET_POSTS,
   GET_POSTS_BY_CATEGORY,
@@ -19,7 +19,7 @@ import {
   EDIT_COMMENT,
   VOTE_COMMENT_UP,
   VOTE_COMMENT_DOWN
-} from '../actions'
+} from '../utils/constants'
 
 function categories(state = [], action) {
   switch (action.type) {
@@ -35,13 +35,6 @@ function posts(state = [], action) {
     case GET_POSTS:
       return action.posts
     case VOTE_POST_UP:
-      return state.map((item, index) => {
-        if (item.id !== action.post.id) {
-          return item
-        }
-        item.voteScore = action.post.voteScore
-        return item
-      })
     case VOTE_POST_DOWN:
       return state.map((item, index) => {
         if (item.id !== action.post.id) {
@@ -52,7 +45,7 @@ function posts(state = [], action) {
       })
     case ADD_POST:
       return [...state, action.post]
-    case UPDATE_POST://move to separate function
+    case UPDATE_POST:
       return state.map((item, index) => {
         if (item.id !== action.post.id) {
           return item
@@ -69,15 +62,12 @@ function posts(state = [], action) {
 function post(state = {}, action) {
   switch (action.type) {
     case GET_POST:
-      return action.post
     case UPDATE_POST:
+    case VOTE_POST_UP:
+    case VOTE_POST_DOWN:
       return action.post
     case DELETE_POST:
       return { isDeleted: true }
-    case VOTE_POST_UP:
-      return action.post
-    case VOTE_POST_DOWN:
-      return action.post
     default:
       return state
   }
@@ -117,21 +107,14 @@ function comments(state = [], action) {
         return { ...item, ...action.comment }
       })
     case VOTE_COMMENT_UP:
+    case VOTE_COMMENT_DOWN:
       return _.orderBy(state.map((item, index) => {
         if (item.id !== action.comment.id) {
           return item
         }
         item.voteScore = action.comment.voteScore
         return item
-      }), 'voteScore', 'desc') 
-    case VOTE_COMMENT_DOWN:
-      return  _.orderBy(state.map((item, index) => {
-        if (item.id !== action.comment.id) {
-          return item
-        }
-        item.voteScore = action.comment.voteScore
-        return item
-      }), 'voteScore', 'desc') 
+      }), 'voteScore', 'desc')
     default:
       return state
   }

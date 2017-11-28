@@ -1,36 +1,24 @@
 import * as ReadableAPI from '../utils/ReadableAPI'
-import { VOTE_UP } from '../utils/constants';
 
-export const GET_POSTS = 'GET_POSTS'
-export const GET_POSTS_BY_CATEGORY = 'GET_POSTS_BY_CATEGORY'
-export const GET_CATEGORIES = 'GET_CATEGORIES'
-export const SORT_POSTS = 'SORT_POSTS'
-export const ADD_POST = 'ADD_POST'
-export const GET_POST = 'GET_POST'
-export const UPDATE_POST = 'UPDATE_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const VOTE_POST_UP = 'VOTE_POST_UP'
-export const VOTE_POST_DOWN = 'VOTE_POST_DOWN'
-export const GET_COMMENTS = 'GET_COMMENTS'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const VOTE_COMMENT_UP = 'VOTE_COMMENT_UP'
-export const VOTE_COMMENT_DOWN = 'VOTE_COMMENT_DOWN'
-
-export function getCategories(categories) {
-  return {
-    type: GET_CATEGORIES,
-    categories
-  }
-}
-
-export function getPosts(posts) {
-  return {
-    type: GET_POSTS,
-    posts
-  }
-}
+import {
+  VOTE_UP,
+  GET_CATEGORIES,
+  GET_POSTS,
+  GET_POSTS_BY_CATEGORY,
+  SORT_POSTS,
+  ADD_POST,
+  GET_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  VOTE_POST_UP,
+  VOTE_POST_DOWN,
+  GET_COMMENTS,
+  ADD_COMMENT,
+  DELETE_COMMENT,
+  EDIT_COMMENT,
+  VOTE_COMMENT_UP,
+  VOTE_COMMENT_DOWN
+} from '../utils/constants'
 
 export function getPostsByCategory(category) {
   return {
@@ -47,18 +35,25 @@ export function sortPostsBy(sortBy) {
 }
 
 //API async fetchers. redux-thunk helps to conect them as actions
-export function fetchCategories() {
+
+export function getCategories() {
   return dispatch => {
     ReadableAPI.getCategories().then(categories => {
-      dispatch(getCategories(categories))
+      dispatch({
+        type: GET_CATEGORIES,
+        categories
+      })
     })
   }
 }
 
-export function fetchPosts() {
+export function getPosts() {
   return dispatch => {
     ReadableAPI.getPosts().then(posts => {
-      dispatch(getPosts(posts))
+      dispatch({
+        type: GET_POSTS,
+        posts
+      })
     })
   }
 }
@@ -96,7 +91,7 @@ export function votePost(id, vote) {
   }
 }
 
-export function fetchPostDetail(postId) {
+export function getPostDetail(postId) {
   return dispatch => {
     ReadableAPI.getPost(postId).then(p => {
       dispatch({
@@ -118,7 +113,7 @@ export function deletePost(postId) {
   }
 }
 
-export function fetchComments(postId) {
+export function getComments(postId) {
   return dispatch => {
     ReadableAPI.getComments(postId).then(comments => {
       dispatch({

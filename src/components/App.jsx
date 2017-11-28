@@ -8,8 +8,8 @@ import Categories from './categories'
 import Posts from './posts'
 import PostDetail from './postdetail'
 import AddEditControl from './addeditcontrol'
-import { BY_VOTE_SCORE, BY_TIME_STAMP, NONE } from '../utils/constants'
-import { fetchCategories, fetchPosts, getPostsByCategory, sortPostsBy, addPost } from '../actions'
+import { BY_VOTE_SCORE, NONE } from '../utils/constants'
+import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost } from '../actions'
 
 class App extends Component {
 
@@ -20,8 +20,8 @@ class App extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props
-    dispatch(fetchCategories())
-    dispatch(fetchPosts())
+    dispatch(getCategories())
+    dispatch(getPosts())
   }
 
   openModal = () => this.setState(() => ({ addModalOpen: true }))
