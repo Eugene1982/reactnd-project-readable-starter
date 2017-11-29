@@ -83,12 +83,12 @@ class PostDetail extends Component {
                     <button onClick={this.openModal}>Edit Post</button>
                     <button onClick={this.deletePost}>Delete Post</button>
                 </div>
-                <h3 className='subheader'>
-                    <div>Post Detail: {dateTime}</div>
+                <div className='post-detail'>
                     <div>Title: {post.title}</div>
-                    <div> Body: {post.body}</div>
+                    <div>Body: {post.body}</div>
+                    <div>Time: {dateTime}</div>
                     <div>Vote: {post.voteScore}</div>
-                </h3>
+                </div>
                 <VoteControl currentId={post.id} onVote={this.onPostVote} />
                 <br />
                 <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment}

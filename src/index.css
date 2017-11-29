@@ -14,11 +14,9 @@ body {
 
 .modal {
   position: absolute;
-  top: 40px;
-  left: 200px;
-  right: 200px;
-  bottom: 40px;
-  border: 1px solid rgb(204, 204, 204);
+  top: 100px;
+  left: 500px;
+   border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
   overflow: auto;
   border-radius: 4px;
@@ -30,6 +28,75 @@ body {
 }
 
 .bodyArea{
-  width: 300px;
+  width: 500px;
   height: 100px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.editor-field{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 500px;
+}
+
+.comment-editor{
+  margin-right: 5px;
+}
+
+
+.posts-list div {
+  width: 800px;
+}
+ 
+.posts-list h3 {
+  font: 300 30px/1.5 Helvetica, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+ 
+.posts-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ 
+.posts-list li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+ 
+.posts-list li:last-child {
+  border: none;
+}
+ 
+.posts-list li a {
+  text-decoration: none;
+  color: #000;
+  display: block;
+ 
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+ 
+.posts-list li a:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+}
+
+.post-detail {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  margin: 10px 10px 10px 10px;
+  border: 1px solid rgb(145, 7, 7);
+  padding: 20px;
+  width: 800px;
+  background: rgb(228, 160, 160);
+  box-shadow: inset 0px 0px 15px #FFE5E5;
+  -moz-box-shadow: inset 0px 0px 15px #FFE5E5;
+  -webkit-box-shadow: inset 0px 0px 15px #FFE5E5;
 }

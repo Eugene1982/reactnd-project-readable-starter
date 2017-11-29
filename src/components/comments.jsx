@@ -62,14 +62,12 @@ class Comments extends Component {
                 </ul>
                 <button onClick={() => this.addNewComment()}><AddNewIcon size={20}/></button>
                 {addNew && <div>
-                    <input type="text" name="body" ref="inputNewBody" />
-                    <input type="text" name="author" ref="inputNewAuthor" />
+                    <input type="text" name="body" className="comment-editor" placeholder="Body" ref="inputNewBody" />
+                    <input type="text" name="author"className="comment-editor" placeholder="Author" ref="inputNewAuthor" />
                     <button onClick={() => this.onSaveNewComment()}><SaveIcon size={10}/></button>
                 </div>}
             </div>
         )
-
-
     }
 }
 
