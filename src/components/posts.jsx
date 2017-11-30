@@ -16,7 +16,8 @@ export default function Posts ({ list, onSortPostsBy, onVote }) {
         <ul>
           {list.map((item) => (
             <li key={item.title} >
-              <Link to={`/post/${item.id}`}> {item.title}</Link> Score: {item.voteScore}
+              <Link to={`/post/${item.id}`}> {item.title}</Link> 
+              <div className="detail-vote">Score: {item.voteScore}</div>
             </li>
           ))}
         </ul>

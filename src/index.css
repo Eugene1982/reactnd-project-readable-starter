@@ -57,8 +57,9 @@ body {
  
 .posts-list ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  margin: 5px;
+  padding: 5px;
+  background: rgb(241, 222, 180)
 }
  
 .posts-list li {
@@ -84,7 +85,7 @@ body {
  
 .posts-list li a:hover {
   font-size: 30px;
-  background: #f6f6f6;
+  background:  rgb(196, 164, 26);
 }
 
 .post-detail {
@@ -95,8 +96,27 @@ body {
   border: 1px solid rgb(145, 7, 7);
   padding: 20px;
   width: 800px;
-  background: rgb(228, 160, 160);
+  background: rgb(196, 164, 26);
   box-shadow: inset 0px 0px 15px #FFE5E5;
   -moz-box-shadow: inset 0px 0px 15px #FFE5E5;
   -webkit-box-shadow: inset 0px 0px 15px #FFE5E5;
+}
+
+.detail-title{
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  margin-bottom: 10px;
+}
+
+.detail-body{
+  margin-bottom: 10px;
+}
+
+.detail-time{
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.detail-vote{
+  font: 100 15px/1.5 Helvetica, Verdana, sans-serif;
+  color: rgba(114, 105, 105, 0.534)
 }

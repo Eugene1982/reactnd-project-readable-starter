@@ -84,10 +84,10 @@ class PostDetail extends Component {
                     <button onClick={this.deletePost}>Delete Post</button>
                 </div>
                 <div className='post-detail'>
-                    <div>Title: {post.title}</div>
-                    <div>Body: {post.body}</div>
-                    <div>Time: {dateTime}</div>
-                    <div>Vote: {post.voteScore}</div>
+                    <div className="detail-title">{post.title}</div>
+                    <div className="detail-body">{post.body}</div>
+                    <div className="detail-time">{dateTime}</div>
+                    <div className="detail-vote">Vote: {post.voteScore}</div>
                 </div>
                 <VoteControl currentId={post.id} onVote={this.onPostVote} />
                 <br />

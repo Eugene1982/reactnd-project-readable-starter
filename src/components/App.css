@@ -53,6 +53,6 @@ li a:hover {
 }
 
 .navigation--active a {
-  background-color: red;
+  background-color: rgb(196, 164, 26)
 }
 
