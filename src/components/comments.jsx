@@ -49,7 +49,8 @@ class Comments extends Component {
             </h3>
                 <ul>
                     {list.length > 0 && list.map((item) => (
-                        (editCommentId === item.id ? <li key={item.id} >
+                        (editCommentId === item.id ? 
+                        <li key={item.id} >
                             <input type="text" name="body" ref="input" defaultValue={item.body} /><button onClick={() => this.onSaveComment(item)}><SaveIcon size={10} /></button>
                         </li>
                             : <li key={item.id}>

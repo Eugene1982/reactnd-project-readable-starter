@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import SortControl from './sortcontrol'
 import VoteControl from './votecontrol'
 import AddEditControl from './addeditcontrol'
+import CommentsAmount from './commentsamount'
 
 class Posts extends Component {
 
@@ -18,6 +19,7 @@ class Posts extends Component {
     this.props.onUpdatePost(updatedPost);
     this.closeModal()
   }
+
   render() {
     const { list, onSortPostsBy, onPostVote, onUpdatePost } = this.props;
     const { editModalOpen } = this.state
@@ -34,7 +36,7 @@ class Posts extends Component {
         <SortControl onSortBy={onSortPostsBy} />
         <ul>
           {list.map((item) => (
-            <li key={item.title} >
+            <li key={item.id} >
               <Modal
                 className='modal'
                 overlayClassName='overlay'
@@ -50,7 +52,7 @@ class Posts extends Component {
                 <button onClick={() => this.props.onDeletePost(item.id)}>Delete Post</button>
               </div>
               <div className="detail-vote">Score: {item.voteScore}</div>
-              <div className="detail-vote">Comments Nr: {item.voteScore}</div>
+              <div className="detail-vote">Comments Nr: <CommentsAmount postId={item.id}/> </div>
               <div className="detail-vote">Author: {item.author}</div>
               <VoteControl currentId={item.id} onVote={onPostVote} />
             </li>

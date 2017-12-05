@@ -9,7 +9,7 @@ import Posts from './posts'
 import PostDetail from './postdetail'
 import AddEditControl from './addeditcontrol'
 import { BY_VOTE_SCORE, NONE } from '../utils/constants'
-import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost, updatePost, deletePost, votePost } from '../actions'
+import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost, updatePost, deletePost, votePost, getComments } from '../actions'
 
 class App extends Component {
 
@@ -41,7 +41,7 @@ class App extends Component {
   selectCategory = (category) => {
     const { dispatch } = this.props
     this.setState(() => ({ category: category }))
-    dispatch(getPostsByCategory(category)) 
+    dispatch(getPostsByCategory(category))
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
 
@@ -66,23 +66,23 @@ class App extends Component {
     const { id, body, title, author } = updatedPost
 
     dispatch(updatePost({
-        id: id,
-        title: title,
-        body: body,
-        category: this.state.category,
-        author: author,
-        timestamp: Date.now()
+      id: id,
+      title: title,
+      body: body,
+      category: this.state.category,
+      author: author,
+      timestamp: Date.now()
     }))
-}
+  }
 
-deletePost = (postId) => {
+  deletePost = (postId) => {
     const { dispatch } = this.props
     dispatch(deletePost(postId))
-}
+  }
 
   onPostVote = (id, vote) => {
-      const { dispatch } = this.props
-      dispatch(votePost(id, vote))
+    const { dispatch } = this.props
+    dispatch(votePost(id, vote))
   }
 
   render() {
@@ -100,10 +100,10 @@ deletePost = (postId) => {
                </button>
           </div>
         }
-       <Route path="/post/:postId" render={(props) => (
+        <Route path="/post/:postId" render={(props) => (
           <div>
             <Link to="/">Return to posts</Link>
-            <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost}/>
+            <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
           </div>
         )} />
         <Route exact path="/" render={() => (
@@ -111,7 +111,7 @@ deletePost = (postId) => {
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost}/>
           </div>
         )} />
-       
+
         <Modal
           className='modal'
           overlayClassName='overlay'
@@ -119,10 +119,8 @@ deletePost = (postId) => {
           onRequestClose={this.closeModal}
           contentLabel='Modal'
         >
-          {addModalOpen && <AddEditControl savePost={this.createPost}/>}
+          {addModalOpen && <AddEditControl savePost={this.createPost} />}
         </Modal>
-
-
       </div>
     )
   }
@@ -141,12 +139,15 @@ const applyFilteringAndSorting = (posts, category, sortBy) => {
 }
 
 const mapStateToProps = (state) => {
-  const { categories, posts, selectCategory, sortPostsBy } = state
+  const { categories, posts, selectCategory, sortPostsBy, comments } = state
   return {
     categories,
-    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy) //need to add aggregate - amount of comments
+    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy),
+    amountOfComments: posts.map((post, index) => {
+      return { postId: post.id, quantity: comments.filter(comment => comment.parentId === post.id).length }
+    })
   }
-};
+}
 
 export default withRouter(connect(
   mapStateToProps

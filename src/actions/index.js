@@ -17,7 +17,8 @@ import {
   DELETE_COMMENT,
   EDIT_COMMENT,
   VOTE_COMMENT_UP,
-  VOTE_COMMENT_DOWN
+  VOTE_COMMENT_DOWN,
+  SHOW_COMMENTS_AMOUNT
 } from '../utils/constants'
 
 export function getPostsByCategory(category) {
@@ -124,12 +125,24 @@ export function getComments(postId) {
   }
 }
 
+export function getCommentsAmount(postId) {
+  return dispatch => {
+    ReadableAPI.getComments(postId).then(comments => {
+      dispatch({
+        type: SHOW_COMMENTS_AMOUNT,
+        postId: postId,
+        amount: comments.length
+      })
+    })
+  }
+}
+
 export function deleteComment(commentId) {
   return dispatch => {
     ReadableAPI.deleteComment(commentId).then(c => {
       dispatch({
         type: DELETE_COMMENT,
-        commentId: c.id
+        comment: c
       })
     })
   }

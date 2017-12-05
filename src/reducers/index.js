@@ -18,7 +18,8 @@ import {
   DELETE_COMMENT,
   EDIT_COMMENT,
   VOTE_COMMENT_UP,
-  VOTE_COMMENT_DOWN
+  VOTE_COMMENT_DOWN,
+  SHOW_COMMENTS_AMOUNT
 } from '../utils/constants'
 
 function categories(state = [], action) {
@@ -96,7 +97,7 @@ function comments(state = [], action) {
     case GET_COMMENTS:
       return _.orderBy(action.comments, 'voteScore', 'desc')
     case DELETE_COMMENT:
-      return state.filter((item) => item.id !== action.commentId)
+      return state.filter((item) => item.id !== action.comment.id)
     case ADD_COMMENT:
       return [...state, action.comment]
     case EDIT_COMMENT:
@@ -120,13 +121,28 @@ function comments(state = [], action) {
   }
 }
 
+function commentsAmount(state = [], action) {
+  switch (action.type) {
+    case SHOW_COMMENTS_AMOUNT:
+      return state[action.postId] === undefined ?
+        { ...state, [action.postId]: action.amount } : state
+    case ADD_COMMENT:
+      return { ...state, [action.comment.parentId]: state[action.comment.parentId] += 1 }
+    case DELETE_COMMENT:
+      return { ...state, [action.comment.parentId]: state[action.comment.parentId] -= 1 }
+    default:
+      return state
+  }
+}
+
 const rootReducer = combineReducers({
   categories,
   posts,
   post,
   selectCategory,
   sortPostsBy,
-  comments
+  comments,
+  commentsAmount
 })
 
 export default rootReducer

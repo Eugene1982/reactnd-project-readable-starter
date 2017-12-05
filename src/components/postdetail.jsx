@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
+import CommentsAmount from './commentsamount'
 import VoteControl from './votecontrol'
 import { getPostDetail, getComments, addComment, updateComment, deleteComment, voteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
@@ -65,6 +66,7 @@ class PostDetail extends Component {
                     <div className="detail-title">{post.title}</div>
                     <div className="detail-body">{post.body}</div>
                     <div className="detail-time">{dateTime}</div>
+                    <div className="detail-vote">Comments Nr:  <CommentsAmount postId={post.id}/> </div>
                     <div className="detail-vote">Vote: {post.voteScore}</div>
                 </div>
                 <VoteControl currentId={post.id} onVote={this.props.onPostVote} />
@@ -93,6 +95,5 @@ const mapStateToProps = (state) => {
         comments: comments
     }
 };
-
 
 export default connect(mapStateToProps)(PostDetail)
