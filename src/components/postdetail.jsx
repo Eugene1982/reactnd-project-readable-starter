@@ -4,7 +4,7 @@ import Modal from 'react-modal'
 import AddEditControl from './addeditcontrol'
 import Comments from './comments'
 import VoteControl from './votecontrol'
-import { getPostDetail, getComments, updatePost, deletePost, votePost, addComment, updateComment, deleteComment, voteComment } from '../actions'
+import { getPostDetail, getComments, addComment, updateComment, deleteComment, voteComment } from '../actions'
 import { Redirect } from 'react-router-dom';
 
 class PostDetail extends Component {
@@ -22,25 +22,8 @@ class PostDetail extends Component {
     closeModal = () => this.setState(() => ({ editModalOpen: false }))
 
     updatePost = (updatedPost) => {
-        const { dispatch, post } = this.props
-        const { id, body, title, author } = updatedPost
-
-        dispatch(updatePost({
-            id: id,
-            title: title,
-            body: body,
-            category: post.category,
-            author: author,
-            timestamp: Date.now()
-        }))
-
+        this.props.onUpdatePost(updatedPost);
         this.closeModal()
-    }
-
-    deletePost = (e) => {
-        const { dispatch, post } = this.props
-        e.preventDefault()
-        dispatch(deletePost(post.id))
     }
 
     onDeleteComment = (commentId) => {
@@ -56,11 +39,6 @@ class PostDetail extends Component {
     onAddComment = (comment) => {
         const { dispatch } = this.props
         dispatch(addComment(comment))
-    }
-
-    onPostVote = (id, vote) => {
-        const { dispatch } = this.props
-        dispatch(votePost(id, vote))
     }
 
     onCommentVote = (id, vote) => {
@@ -81,7 +59,7 @@ class PostDetail extends Component {
             <div>
                 <div>
                     <button onClick={this.openModal}>Edit Post</button>
-                    <button onClick={this.deletePost}>Delete Post</button>
+                    <button onClick={() => this.props.onDeletePost(post.id)}>Delete Post</button>
                 </div>
                 <div className='post-detail'>
                     <div className="detail-title">{post.title}</div>
@@ -89,7 +67,7 @@ class PostDetail extends Component {
                     <div className="detail-time">{dateTime}</div>
                     <div className="detail-vote">Vote: {post.voteScore}</div>
                 </div>
-                <VoteControl currentId={post.id} onVote={this.onPostVote} />
+                <VoteControl currentId={post.id} onVote={this.props.onPostVote} />
                 <br />
                 <Comments list={comments} postId={post.id} onDeleteComment={this.onDeleteComment}
                     onUpdateComment={this.onUpdateComment} onAddComment={this.onAddComment} onCommentVote={this.onCommentVote} />

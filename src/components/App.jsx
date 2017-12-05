@@ -9,7 +9,7 @@ import Posts from './posts'
 import PostDetail from './postdetail'
 import AddEditControl from './addeditcontrol'
 import { BY_VOTE_SCORE, NONE } from '../utils/constants'
-import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost } from '../actions'
+import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost, updatePost, deletePost, votePost } from '../actions'
 
 class App extends Component {
 
@@ -37,10 +37,11 @@ class App extends Component {
     dispatch(sortPostsBy(sortBy))
   }
 
+  //change mechanism to render with url  instead of dispatching
   selectCategory = (category) => {
     const { dispatch } = this.props
     this.setState(() => ({ category: category }))
-    dispatch(getPostsByCategory(category))
+    dispatch(getPostsByCategory(category)) 
     dispatch(sortPostsBy(BY_VOTE_SCORE))//?
   }
 
@@ -58,6 +59,30 @@ class App extends Component {
     }))
 
     this.closeModal()
+  }
+
+  updatePost = (updatedPost) => {
+    const { dispatch, post } = this.props
+    const { id, body, title, author } = updatedPost
+
+    dispatch(updatePost({
+        id: id,
+        title: title,
+        body: body,
+        category: this.state.category,
+        author: author,
+        timestamp: Date.now()
+    }))
+}
+
+deletePost = (postId) => {
+    const { dispatch } = this.props
+    dispatch(deletePost(postId))
+}
+
+  onPostVote = (id, vote) => {
+      const { dispatch } = this.props
+      dispatch(votePost(id, vote))
   }
 
   render() {
@@ -78,12 +103,12 @@ class App extends Component {
        <Route path="/post/:postId" render={(props) => (
           <div>
             <Link to="/">Return to posts</Link>
-            <PostDetail postId={props.match.params.postId}/>
+            <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost}/>
           </div>
         )} />
         <Route exact path="/" render={() => (
           <div>
-            <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} />
+            <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost}/>
           </div>
         )} />
        
@@ -119,7 +144,7 @@ const mapStateToProps = (state) => {
   const { categories, posts, selectCategory, sortPostsBy } = state
   return {
     categories,
-    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy)
+    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy) //need to add aggregate - amount of comments
   }
 };
 
