@@ -103,7 +103,7 @@ class App extends Component {
           </div>
         }
         <Redirect from="/" to="All"/>
-        <Route path="/post/:category/:postId" render={(props) => (
+        <Route path="/:category/:postId" render={(props) => (
           <div>
             <Link to="/All">Return to posts</Link>
             <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
