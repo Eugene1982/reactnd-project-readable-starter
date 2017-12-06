@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Route, withRouter, Link } from 'react-router-dom';
+import { Route, Redirect , withRouter, Link } from 'react-router-dom';
 import Modal from 'react-modal'
 import _ from 'lodash'
 import './App.css';
@@ -102,13 +102,14 @@ class App extends Component {
                </button>
           </div>
         }
+        <Redirect from="/" to="All"/>
         <Route path="/post/:category/:postId" render={(props) => (
           <div>
-            <Link to="/">Return to posts</Link>
+            <Link to="/All">Return to posts</Link>
             <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
           </div>
         )} />
-        <Route exact path="/" render={() => (
+        <Route exact path="/:category" render={() => (
           <div>
             <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
           </div>

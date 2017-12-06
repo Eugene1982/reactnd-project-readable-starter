@@ -52,7 +52,7 @@ class PostDetail extends Component {
         const { editModalOpen } = this.state
 
         if (Object.keys(post).length === 0 || post.isDeleted) {
-            return <Redirect to={'/'} />
+            return <Redirect to={'All'} />
         }
 
         let dateTime = new Date(post.timestamp * 1000).toUTCString()

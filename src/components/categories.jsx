@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Categories({ categories, onSelect, activeCategory }) {
 
@@ -12,7 +13,7 @@ export default function Categories({ categories, onSelect, activeCategory }) {
         {categories && categories.map((item) => (
           <li key={item.name} className={(Object.keys(activeCategory).length === 0 && item.name === 'All') || activeCategory === item.name ? 'navigation--active' : ''} 
           onClick={() => onSelect(item.path)}>
-            <a>{item.name}</a>
+            <Link to={item.name}>{item.name}</Link>
           </li>
         ))}
       </ul>
