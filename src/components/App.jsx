@@ -9,7 +9,9 @@ import Posts from './posts'
 import PostDetail from './postdetail'
 import AddEditControl from './addeditcontrol'
 import { BY_VOTE_SCORE, NONE } from '../utils/constants'
-import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost, updatePost, deletePost, votePost, getComments } from '../actions'
+import { getCategories, getPosts, getPostsByCategory, sortPostsBy, addPost, updatePost, deletePost, votePost } from '../actions'
+
+const uuidv4 = require('uuid/v4');
 
 class App extends Component {
 
@@ -50,7 +52,7 @@ class App extends Component {
     const { body, title, author } = post
 
     dispatch(addPost({
-      id: _.uniqueId(),
+      id: uuidv4(),
       title: title,
       body: body,
       category: this.state.category,
@@ -62,7 +64,7 @@ class App extends Component {
   }
 
   updatePost = (updatedPost) => {
-    const { dispatch, post } = this.props
+    const { dispatch } = this.props
     const { id, body, title, author } = updatedPost
 
     dispatch(updatePost({

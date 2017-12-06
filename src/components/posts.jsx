@@ -9,11 +9,12 @@ import CommentsAmount from './commentsamount'
 class Posts extends Component {
 
   state = {
-    editModalOpen: false
+    editModalOpen: false,
+    editPost: null
   }
 
-  openModal = () => this.setState(() => ({ editModalOpen: true }))
-  closeModal = () => this.setState(() => ({ editModalOpen: false }))
+  openModal = (post) => this.setState(() => ({ editModalOpen: true, editPost: post }))
+  closeModal = () => this.setState(() => ({ editModalOpen: false, editPost: null }))
 
   updatePost = (updatedPost) => {
     this.props.onUpdatePost(updatedPost);
@@ -21,7 +22,7 @@ class Posts extends Component {
   }
 
   render() {
-    const { list, onSortPostsBy, onPostVote, onUpdatePost } = this.props;
+    const { list, onSortPostsBy, onPostVote } = this.props;
     const { editModalOpen } = this.state
 
     if (list.length === 0) {
@@ -37,18 +38,9 @@ class Posts extends Component {
         <ul>
           {list.map((item) => (
             <li key={item.id} >
-              <Modal
-                className='modal'
-                overlayClassName='overlay'
-                isOpen={editModalOpen}
-                onRequestClose={this.closeModal}
-                contentLabel='Modal'
-              >
-                {editModalOpen && <AddEditControl savePost={this.updatePost} post={item} />}
-              </Modal>
               <Link to={`/post/${item.id}`}> {item.title}</Link>
               <div>
-                <button onClick={this.openModal}>Edit Post</button>
+                <button onClick={() => this.openModal(item)}>Edit Post</button>
                 <button onClick={() => this.props.onDeletePost(item.id)}>Delete Post</button>
               </div>
               <div className="detail-vote">Score: {item.voteScore}</div>
@@ -58,6 +50,15 @@ class Posts extends Component {
             </li>
           ))}
         </ul>
+        <Modal
+                className='modal'
+                overlayClassName='overlay'
+                isOpen={editModalOpen}
+                onRequestClose={this.closeModal}
+                contentLabel='Modal'
+              >
+                {editModalOpen && <AddEditControl savePost={this.updatePost} post={this.state.editPost} />}
+              </Modal>
       </div>
     )
   }

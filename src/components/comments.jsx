@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import _ from 'lodash'
 import VoteControl from './votecontrol'
 import EditIcon from 'react-icons/lib/fa/edit'
 import SaveIcon from 'react-icons/lib/fa/floppy-o'
 import DeleteIcon from 'react-icons/lib/fa/trash'
 import AddNewIcon from 'react-icons/lib/md/add'
+
+const uuidv4 = require('uuid/v4');
 
 class Comments extends Component {
     state = {
@@ -24,7 +25,7 @@ class Comments extends Component {
 
     onSaveNewComment = () => {
         this.props.onAddComment({
-            id: _.uniqueId(),
+            id: uuidv4(),
             parentId: this.props.postId,
             timestamp: Date.now(),
             body: this.refs.inputNewBody.value,
