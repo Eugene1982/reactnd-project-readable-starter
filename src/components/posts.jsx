@@ -38,7 +38,7 @@ class Posts extends Component {
         <ul>
           {list.map((item) => (
             <li key={item.id} >
-              <Link to={`/post/${item.id}`}> {item.title}</Link>
+              <Link to={`/post/${item.category}/${item.id}`}> {item.title}</Link>
               <div>
                 <button onClick={() => this.openModal(item)}>Edit Post</button>
                 <button onClick={() => this.props.onDeletePost(item.id)}>Delete Post</button>

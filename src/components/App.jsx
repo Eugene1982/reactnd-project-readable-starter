@@ -102,7 +102,7 @@ class App extends Component {
                </button>
           </div>
         }
-        <Route path="/post/:postId" render={(props) => (
+        <Route path="/post/:category/:postId" render={(props) => (
           <div>
             <Link to="/">Return to posts</Link>
             <PostDetail postId={props.match.params.postId} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
@@ -110,7 +110,7 @@ class App extends Component {
         )} />
         <Route exact path="/" render={() => (
           <div>
-            <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost}/>
+            <Posts list={this.props.posts} onSortPostsBy={this.onSortPostsBy} onPostVote={this.onPostVote} onDeletePost={this.deletePost} onUpdatePost={this.updatePost} />
           </div>
         )} />
 
@@ -141,13 +141,10 @@ const applyFilteringAndSorting = (posts, category, sortBy) => {
 }
 
 const mapStateToProps = (state) => {
-  const { categories, posts, selectCategory, sortPostsBy, comments } = state
+  const { categories, posts, selectCategory, sortPostsBy } = state
   return {
     categories,
-    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy),
-    amountOfComments: posts.map((post, index) => {
-      return { postId: post.id, quantity: comments.filter(comment => comment.parentId === post.id).length }
-    })
+    posts: applyFilteringAndSorting(posts, selectCategory, sortPostsBy)
   }
 }
 

@@ -51,7 +51,7 @@ class PostDetail extends Component {
         const { post, comments } = this.props
         const { editModalOpen } = this.state
 
-        if (post.isDeleted) {
+        if (Object.keys(post).length === 0 || post.isDeleted) {
             return <Redirect to={'/'} />
         }
 
